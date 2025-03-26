@@ -1,0 +1,269 @@
+<h1>Input components and validators</h1>
+
+<form #form="ngForm" novalidate autocomplete="off">
+  <div class="row mt-5 form-group">
+    <div class="col-3 font-weight-bold">Autocomplete</div>
+    <div class="col-2">Cantons</div>
+    <div class="col-5">
+      <is-autocomplete [(ngModel)]="record['canton']"
+                       name="canton"
+                       idField="id"
+                       textField="name"
+                       placeholderKey="canton.placeholder"
+                       [security]="false"
+                       objectName="canton">
+      </is-autocomplete>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-3 font-weight-bold">Text</div>
+    <div class="col-2">Number</div>
+    <div class="col-5">
+      <is-text [(ngModel)]="record['number']"
+               name="number"
+               isValidateNumber
+               [security]="false">
+      </is-text>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-3 font-weight-bold"></div>
+    <div class="col-2">Number en format décimal</div>
+    <div class="col-5">
+      <is-text [(ngModel)]="record['number-decimal']"
+               name="number-decimal"
+               isValidateNumber
+               format="decimal"
+               [decimals]="1"
+               [security]="false">
+      </is-text>
+    </div>
+    <div class="col-2">
+      <is-text [(ngModel)]="record['number-decimal']"
+               name="number-decimal"
+               [readonly]="true"
+               isValidateNumber
+               [decimals]="1"
+               format="decimal"
+               [security]="false">
+      </is-text>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-3 font-weight-bold"></div>
+    <div class="col-2">Number en format CH</div>
+    <div class="col-5">
+      <is-text [(ngModel)]="record['number-ch']"
+               name="number-ch"
+               isValidateNumber
+               format="number"
+               [security]="false">
+      </is-text>
+    </div>
+    <div class="col-2">
+      <is-text [(ngModel)]="record['number-ch']"
+               name="number-ch"
+               [readonly]="true"
+               isValidateNumber
+               format="number"
+               [security]="false">
+      </is-text>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-3 font-weight-bold">Textarea required</div>
+    <div class="col-2">Text</div>
+    <div class="col-5">
+      <is-text [(ngModel)]="record['textarea']"
+               name="textarea"
+               [textarea]="true"
+               [rows]="1"
+               [required]="true"
+               [security]="false">
+      </is-text>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-3 font-weight-bold">Textarea minlength 10</div>
+    <div class="col-2">Text</div>
+    <div class="col-5">
+      <is-text [(ngModel)]="record['textareaMin']"
+               name="textareaMin"
+               [textarea]="true"
+               rows="1"
+               [minlength]="10"
+               [security]="false">
+      </is-text>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-3 font-weight-bold">Input file</div>
+    <div class="col-2">File</div>
+    <div class="col-5 ml-3">
+      <is-file [permittedTypes]="['.png']"></is-file>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-3 font-weight-bold">Textarea autoresize (primeng)</div>
+    <div class="col-2">Text</div>
+    <div class="col-5">
+      <is-textarea [(ngModel)]="record['textareaPrime']"
+               name="textareaPrime"
+               rows="1"
+               [security]="false">
+      </is-textarea>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-3 font-weight-bold">Boolean</div>
+    <div class="col-2">Comme radio</div>
+    <div class="col-5">
+      <is-boolean [(ngModel)]="record['boolean']"
+                  name="boolean">
+      </is-boolean>
+    </div>
+  </div>
+
+  <div isValidatePassword ngModelGroup="passwords" #passwords="ngModelGroup">
+    <div class="row form-group">
+      <div class="col-3 font-weight-bold">Change password</div>
+      <div class="col-2">Old password</div>
+      <div class="col-5">
+        <input type="password" class="form-control"
+               name="oldPassword"
+               autocomplete="current-password"
+               #oldPassword="ngModel"
+               [(ngModel)]="record['oldPassword']"
+               maxlength="25">
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-3"></div>
+      <div class="col-2">New password</div>
+      <div class="col-5">
+        <input type="password" class="form-control"
+               [class.border-danger]="passwords.control?.errors?.oldmatch"
+               name="newPassword"
+               #newPassword="ngModel"
+               autocomplete="new-password"
+               [(ngModel)]="record['newPassword']"
+               [maxlength]="25">
+        <small *ngIf="passwords?.control?.errors?.oldmatch"
+               class="text-danger">
+          {{'validator.password.oldmatch' | translate}}.
+        </small>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-3"></div>
+      <div class="col-2">Confirm password</div>
+      <div class="col-5">
+        <input type="password" class="form-control"
+               [class.border-danger]="passwords.control?.errors?.nomatch"
+               name="confirmPassword"
+               [(ngModel)]="record['confirmPassword']"
+               autocomplete="confirm-password"
+               #confirmPassword="ngModel"
+               [maxlength]="25">
+        <small *ngIf="passwords?.control?.errors?.nomatch"
+               class="text-danger">
+          {{'validator.password.nomatch' | translate}}
+        </small>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-3 font-weight-bold">Calendar with min date: {{minDate | date: 'dd.MM.yyyy'}}</div>
+      <div class="col-2">Date</div>
+      <div class="col-3">
+        <is-calendar [(ngModel)]="record['date']"
+                 name="date"
+                     isValidateDate
+                     [minDate]="minDate"
+                 [security]="false">
+        </is-calendar>
+      </div>
+      <div class="col-2">{{record['date'] | date: 'dd.MM.yyyy'}}</div>
+    </div>
+    <div class="row form-group">
+      <div class="col-3 font-weight-bold">Calendar with blocked min date in popup</div>
+      <div class="col-2">Date</div>
+      <div class="col-3">
+        <is-calendar [(ngModel)]="record['dateMin']"
+                     name="dateMin"
+                     isValidateDate
+                     [minDate]="minDate"
+                     [min]="minDate"
+                     [security]="false">
+        </is-calendar>
+      </div>
+      <div class="col-2">{{record['date'] | date: 'dd.MM.yyyy'}}</div>
+    </div>
+    <div class="row form-group">
+      <div class="col-3 font-weight-bold">Calendar with time</div>
+      <div class="col-2">Date</div>
+      <div class="col-3">
+        <is-calendar [(ngModel)]="record['dateWithHours']"
+                     name="dateWithHours"
+                     [security]="false"
+                     [showTime]="true"
+                     [hourFormat]="24">
+        </is-calendar>
+      </div>
+      <div class="col-2"><is-calendar [(ngModel)]="record['dateWithHours']"
+                                      name="dateWithHours"
+                                      [security]="false"
+                                      [showTime]="true"
+                                      [hourFormat]="24"
+                                      [readonly]="true">
+      </is-calendar></div>
+    </div>
+    <div class="row form-group">
+      <div class="col-3 font-weight-bold">Calendar required</div>
+      <div class="col-2">Date</div>
+      <div class="col-3">
+        <is-calendar [(ngModel)]="record['dateRequired']"
+                     name="dateRequired"
+                     [messageRequired]="true"
+                     [required]="true"
+                     [security]="false">
+        </is-calendar>
+      </div>
+      <div class="col-2">
+        <is-calendar [(ngModel)]="record['dateRequired']"
+                                      name="dateRequired"
+                                      [security]="false"
+                                      [readonly]="true">
+        </is-calendar>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-3 font-weight-bold">Date pipe</div>
+      <div class="col-2">Input yyyy-MM-dd HH:mm:ss</div>
+      <div class="col-3">
+        {{ '2022-05-16 14:30:20' | isdate: 'dd.MM.yyyy'}}
+      </div>
+      <div class="col-2">
+        Ne fonctionne pas sur Safari
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-3 font-weight-bold"></div>
+      <div class="col-2">Input yyyy-MM-ddTHH:mm:ss</div>
+      <div class="col-3">
+        {{ '2022-05-16T14:30:20' | date: 'dd.MM.yyyy'}}
+      </div>
+      <div class="col-2">
+        ISO 8601. Fonctionne sur Safari.
+      </div>
+    </div>
+  </div>
+</form>
+

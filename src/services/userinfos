@@ -1,0 +1,6 @@
+{
+  "roles": ["test"],
+  "id": 1,
+  "username": "test",
+  "token": "test"
+}

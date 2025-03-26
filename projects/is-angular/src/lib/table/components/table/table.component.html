@@ -1,0 +1,93 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead class="thead-default">
+      <tr>
+        <th
+          *ngFor="let column of columns"
+          [ngClass]="headerClass"
+          [ngStyle]="column.style"
+          (click)="sort($event, column)"
+        >
+          <span
+            *ngIf="
+              !column.headerTemplate && column.selectionMode !== 'multiple'
+            "
+          >
+            {{ column.header }}
+          </span>
+          <span
+            *ngIf="column.headerTemplate && column.selectionMode !== 'multiple'"
+          >
+            <ng-container
+              *ngTemplateOutlet="
+                column.headerTemplate;
+                context: { $implicit: column }
+              "
+            ></ng-container>
+          </span>
+          <span
+            *ngIf="sortable && column.sortable"
+            class="fa fa-fw fa-sort"
+            [ngClass]="{
+              'fa-sort-up': getSortOrder(column) === -1,
+              'fa-sort-down': getSortOrder(column) === 1
+            }"
+          ></span>
+          <input
+            *ngIf="column.selectionMode === 'multiple'"
+            type="checkbox"
+            (change)="toggleRowsWithCheckbox($event)"
+            [checked]="allSelected"
+            [disabled]="isEmpty()"
+          />
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let row of value; let i = index">
+        <tr [ngClass]="[getRowStyleClass(row, i)]">
+          <td
+            *ngFor="let column of columns"
+            [ngStyle]="column.style"
+            [class.pb-0]="lines?.length > 0"
+          >
+            <span
+              *ngIf="
+                !column.bodyTemplate && column.selectionMode !== 'multiple'
+              "
+            >
+              {{ row[column.field] }}
+            </span>
+            <span
+              *ngIf="column.bodyTemplate && column.selectionMode !== 'multiple'"
+            >
+              <ng-container
+                *ngTemplateOutlet="
+                  column.bodyTemplate;
+                  context: { $implicit: column, rowData: row, index: i }
+                "
+              ></ng-container>
+            </span>
+            <input
+              *ngIf="column.selectionMode === 'multiple'"
+              type="checkbox"
+              (change)="toggleRowWithCheckbox($event, row)"
+              [checked]="isSelected(row)"
+              [disabled]="isEmpty()"
+            />
+          </td>
+        </tr>
+        <tr *ngFor="let line of lines" [ngStyle]="line.style">
+          <td [attr.colspan]="columns.length" class="pt-0">
+            <ng-container
+              *ngTemplateOutlet="
+                line.template;
+                context: { $implicit: line, rowData: row, index: i }
+              "
+            ></ng-container>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

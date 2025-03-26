@@ -1,0 +1,9 @@
+{
+  "records": [
+    {"id": 1, "name": "Vaud", "description": "Le plus beau canton du monde au bord du lac Léman"},
+    {"id": 2, "name": "Valais", "description": "Très montagnieux avec un climat méditerrané"},
+    {"id": 3, "name": "Bern", "description": "Connu pour ses ours"},
+    {"id": 4, "name": "Genève", "description": "Le métropole des banques privées"}
+  ],
+  "ids": [1,2,3,4]
+}

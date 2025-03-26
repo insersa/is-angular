@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Possibilité de surcharcher les variables bootstrap si nécessaire */
+@import 'styles-variables';
+
+/* Des composants input en mode readonly, comme text simple, ex. radios, codes, calendrier etc.*/
+.is-input-readonly {
+  display:inline-block;
+  width:100%;
+  padding-top:6px;
+  padding-bottom:6px;
+  font-size:14px;
+  line-height:1.42857143;
+}
+
+.is-input-empty {
+  height: 34px;
+}
+
+.is-textarea-readonly {
+  border: none !important;
+}
+
+/**
+  Le padding par défaut est mis à 0. Si on veut un padding dans un popover,
+  il faut customiser dans le composant qui l'utilise. Voir p.ex. is-multicode
+ */
+.popover-body {
+  padding: 0;
+}
+
+/** ----------- Corrections de thème Bootstrap Primeng 7 ----------------------*/
+.is-radiobutton-icon {
+  top: 50%;
+}
+
+/* Icons next/previous sur p-calendar */
+body p-calendar .ui-datepicker .ui-datepicker-header {
+  .ui-datepicker-prev::before, .ui-datepicker-next::before {
+    content: none;
+  }
+  .ui-datepicker-prev span,  .ui-datepicker-next span {
+    display: block;
+  }
+  .ui-datepicker-prev, .ui-datepicker-next {
+    top: 0.85em;
+  }
+}

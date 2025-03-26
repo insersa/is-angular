@@ -1,0 +1,53 @@
+<!-- Example child form, overriden by business implemenentation -->
+<!-- Only the parent form uses the <form></form> element! -->
+<div #addressForm="ngForm" ngForm="addressForm">
+  <!-- Inputs -->
+  <div>
+    <input
+      type="text"
+      [(ngModel)]="record['aaa_streetname']"
+      name="aaa_streetname"
+      [readonly]="readonly"
+      [id]="'streetname' + index"
+    />
+    <input
+      type="text"
+      [(ngModel)]="record['aaa_zipcode']"
+      name="aaa_zipcode"
+      [readonly]="readonly"
+    />
+    <input
+      type="text"
+      [(ngModel)]="record['aaa_city']"
+      name="aaa_city"
+      [readonly]="readonly"
+    />
+  </div>
+
+  <!-- Buttons -->
+  <div>
+    <button
+      *ngIf="readonly && !create"
+      class="btn btn-secondary"
+      type="button"
+      [id]="'edit' + index"
+      title="Edit"
+      (click)="onEdit()"
+      [disabled]="working"
+    ></button>
+    <button
+      *ngIf="!readonly && !create"
+      type="button"
+      title="Cancel"
+      (click)="onCancel()"
+    ></button>
+    <button
+      *ngIf="!readonly && !create"
+      class="btn btn-primary"
+      type="submit"
+      [id]="'save' + index"
+      title="Save"
+      (click)="onSave()"
+    ></button>
+  </div>
+</div>

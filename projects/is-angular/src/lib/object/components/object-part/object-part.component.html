@@ -1,0 +1,21 @@
+<!-- Address fields, part of a user form -->
+<div>
+  <input
+    type="text"
+    [(ngModel)]="record['use_streetname']"
+    name="use_streetname"
+    [readonly]="readonly"
+  />
+  <input
+    type="text"
+    [(ngModel)]="record['use_zipcode']"
+    name="use_zipcode"
+    [readonly]="readonly"
+  />
+  <input
+    type="text"
+    [(ngModel)]="record['use_city']"
+    name="use_city"
+    [readonly]="readonly"
+  />
+</div>

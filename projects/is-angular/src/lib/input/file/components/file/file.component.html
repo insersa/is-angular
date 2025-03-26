@@ -1,0 +1,97 @@
+<ng-container *ngIf="readonly">
+  <div
+    *ngIf="hasFile || fileName"
+    style="cursor: pointer"
+    (click)="onDownload()"
+  >
+    <span
+      *ngIf="downloadKey"
+      [ngClass]="downloadClass"
+      [ngStyle]="downloadStyle"
+      >{{ downloadKey | translate }}</span
+    >
+    <span
+      *ngIf="downloadLabel"
+      [ngClass]="downloadClass"
+      [ngStyle]="downloadStyle"
+      >{{ downloadLabel }}</span
+    >
+    <span
+      *ngIf="!downloadKey && !downloadLabel"
+      [ngClass]="downloadClass"
+      [ngStyle]="downloadStyle"
+      >{{ fileName }}</span
+    >
+    <i class="fa fa-download ml-2" *ngIf="withDownloadButton"></i>
+  </div>
+  <span *ngIf="!hasFile && emptyKey" [class]="downloadClass">{{
+    emptyKey | translate
+  }}</span>
+</ng-container>
+<div class="row" *ngIf="!readonly">
+  <!-- Upload file -->
+  <!-- https://stackoverflow.com/questions/11235206/twitter-bootstrap-form-file-element-upload-button -->
+  <div [class]="uploadColumnClasses.button + ' pl-0'">
+    <label *ngIf="showFileInput" class="btn btn-primary mb-0">
+      {{ 'button.browse' | translate }}
+      <input type="file" [accept]="acceptedFileTypes" hidden (change)="onSelectFile($event)" />
+    </label>
+  </div>
+  <!-- Uploaded file -->
+  <div
+    *ngIf="showFileInput && uploadedFile"
+    [class]="uploadColumnClasses.filename + ' align-self-center'"
+  >
+    {{ fileName }}
+  </div>
+
+  <!-- Remove file, position par défaut -->
+  <div
+    [class]="uploadColumnClasses.filename + ' align-self-center'"
+    *ngIf="
+      hasFile && !uploadedFile && !deletePositionBottom && withDeleteButton
+    "
+  >
+    <span *ngIf="removeKey">{{ removeKey | translate }}</span>
+    <span *ngIf="!removeKey">{{ fileName }}</span>
+    <span (click)="onRemoveFile()" style="cursor: pointer" class="ml-1"
+      ><i class="fa fa-times"></i
+    ></span>
+  </div>
+</div>
+
+<div *ngIf="!readonly">
+  <!-- Remove file, position bottom -->
+  <div
+    *ngIf="hasFile && !uploadedFile && deletePositionBottom && withDeleteButton"
+  >
+    <span *ngIf="removeKey">{{ removeKey | translate }}</span>
+    <span *ngIf="!removeKey">{{ fileName }}</span>
+    <span (click)="onRemoveFile()" class="ml-1" style="cursor: pointer"
+      ><i class="fa fa-times"></i
+    ></span>
+  </div>
+
+  <!-- Messages -->
+  <div>
+    <small *ngIf="!readonly" class="form-text text-muted">
+      <span *ngIf="maxFileSize >= 1000000"
+        >{{ 'file.maxsize' | translate }} {{ maxFileSize / 1000000 }} MB</span
+      >
+      <span *ngIf="maxFileSize < 1000000"
+        >{{ 'file.maxsize' | translate }} {{ maxFileSize / 1024 }} KB</span
+      >
+    </small>
+  </div>
+  <div class="d-inline-block">
+    <small *ngIf="typeError" class="text-danger">
+      {{ 'validator.filetype' | translate }}.
+    </small>
+    <small *ngIf="sizeError" class="text-danger">
+      {{ 'validator.filesize' | translate }}.
+    </small>
+    <small *ngIf="validError" class="text-danger">
+      {{ 'validator.filename.or.filetype' | translate }}.
+    </small>
+  </div>
+</div>

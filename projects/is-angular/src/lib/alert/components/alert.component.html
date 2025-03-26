@@ -1,0 +1,31 @@
+<i
+  class="fa is-alert-icon"
+  [class.fa-exclamation-circle]="message['level'] === 'info'"
+  [class.fa-exclamation-triangle]="message['level'] === 'warn'"
+  (click)="show = true"
+></i>
+
+<p-dialog [(visible)]="show" [style]="style" modal="modal">
+  <p-header>
+    <div class="d-inline-block">
+      <h2 *ngIf="!smallTitle">{{ message['title'] }}</h2>
+      <h4 *ngIf="smallTitle">{{ message['title'] }}</h4>
+    </div>
+    <div class="d-inline-block">
+      <i
+        class="fa ml-3"
+        [class.fa-1x]="smallIcon"
+        [class.fa-2x]="!smallIcon"
+        [class.fa-exclamation-circle]="message['level'] === 'info'"
+        [class.fa-exclamation-triangle]="message['level'] === 'warn'"
+      ></i>
+    </div>
+  </p-header>
+  <!-- Popup content with line-breaks if edited in a textarea -->
+  <div style="white-space: pre-wrap">{{ message['text'] }}</div>
+  <div class="text-right mt-3">
+    <button type="button" class="btn btn-primary" (click)="onClose()">
+      {{ 'button.ok' | translate }}
+    </button>
+  </div>
+</p-dialog>

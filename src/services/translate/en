@@ -1,0 +1,48 @@
+{
+  "iscode": {
+    "color": {
+      "1": "white",
+      "2": "blue",
+      "3": "yellow",
+      "4": "green",
+      "5": "red"
+    },
+    "material": {
+      "1": "wood",
+      "2": "metal",
+      "3": "glass"
+    }
+  },
+  "codetest": {
+    "field": {
+      "color": "Color",
+      "material": "Material",
+      "cold": "Cold"
+    }
+  },
+  "color": {
+    "cold": "Cold color",
+    "warm": "Warm color",
+    "yellow": "Yellow"
+  },
+  "all": {
+    "or": "or"
+  },
+  "multicode": {
+    "title": {
+      "nbr": "values selected"
+    }
+  },
+  "button": {
+    "all": "All",
+    "none": "None",
+    "close": "Close"
+  },
+  "HELLO": "hello {{value}}",
+  "canton": {
+    "placeholder": "Name of canton"
+  },
+  "validator": {
+    "minlength": "Minimum {{minlength}} characters"
+  }
+}

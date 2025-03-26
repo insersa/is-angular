@@ -1,0 +1,17 @@
+@import "../../../../../../../../src/styles";
+
+.is-disabled {
+  background-color: #eceeef;
+  opacity: 1;
+}
+.is-textarea-readonly {
+  border: solid transparent;
+  background-color: #fff;
+  resize: none;
+}
+
+/** Text area read-only ne doit pas avoir un fond gris */
+.form-control:disabled, .form-control[readonly] {
+  background-color: transparent;
+}
+

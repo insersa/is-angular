@@ -1,0 +1,304 @@
+<!------------------------------------>
+<!---------- Mode Edition ------------>
+<!------------------------------------>
+<!-- inputField.errors === undefined veut dire que l'erreur de validation vient d'une validateur sur <is-text>
+    (pas directement sur <input>) -->
+<!-- 1. inputText avec "required" -->
+<div
+  *ngIf="
+    required &&
+    !textarea &&
+    !readonly &&
+    !disabled &&
+    (!security || user.currentUser?.isAuthWrite(inputControl.name?.toString()))
+  "
+>
+  <input
+    type="text"
+    class="form-control"
+    [ngClass]="inputClass"
+    [class.border-danger]="
+      !inputControl.valid &&
+      (messageRequired ||
+        inputField.errors === undefined ||
+        inputField.errors?.pattern) &&
+      (inputField.touched || submitted)
+    "
+    #inputField="ngModel"
+    [(ngModel)]="value"
+    required
+    [placeholder]="
+      placeholderKey === undefined ? '' : translate.instant(placeholderKey)
+    "
+    (blur)="onBlur()"
+    [maxlength]="maxlength"
+    [pattern]="pattern"
+  />
+  <small
+    *ngIf="
+      inputControl.errors?.required &&
+      messageRequired &&
+      (inputField?.touched || submitted)
+    "
+    class="text-danger"
+  >
+    {{ 'validator.required' | translate }}.
+  </small>
+  <small
+    *ngIf="inputControl.errors?.minValue && (submitted || inputField.touched)"
+    class="text-danger"
+  >
+    {{ validatorMinvalueKey | translate }} {{ min }}.
+  </small>
+  <small
+    *ngIf="inputControl?.errors?.maxValue && (submitted || inputField.touched)"
+    class="text-danger"
+  >
+    {{ validatorMaxvalueKey | translate }} {{ max }}.
+  </small>
+  <small
+    *ngIf="
+      (inputControl.errors?.pattern || inputControl.errors?.numberFormat) &&
+      (submitted || inputField.touched)
+    "
+    class="text-danger"
+  >
+    {{ 'validator.format' | translate }}.
+  </small>
+  <small
+    *ngIf="inputControl?.errors?.minlength && (submitted || inputField.touched)"
+    class="text-danger"
+  >
+    {{ 'validator.minlength' | translate : { minlength: minlength } }}.
+  </small>
+</div>
+
+<!-- 2. inputText sans "required" -->
+<div
+  *ngIf="
+    !required &&
+    !textarea &&
+    !readonly &&
+    !disabled &&
+    (!security || user.currentUser?.isAuthWrite(inputControl.name?.toString()))
+  "
+>
+  <input
+    type="text"
+    class="form-control"
+    [ngClass]="inputClass"
+    [class.border-danger]="
+      !inputControl.valid && (inputField.touched || submitted)
+    "
+    #inputField="ngModel"
+    [(ngModel)]="value"
+    (blur)="onBlur()"
+    [placeholder]="
+      placeholderKey === undefined ? '' : translate.instant(placeholderKey)
+    "
+    [maxlength]="maxlength"
+    [pattern]="pattern"
+  />
+  <small
+    *ngIf="inputControl.errors?.minValue && (submitted || inputField.touched)"
+    class="text-danger"
+  >
+    {{ validatorMinvalueKey | translate }} {{ min }}.
+  </small>
+  <small
+    *ngIf="inputControl?.errors?.maxValue && (submitted || inputField.touched)"
+    class="text-danger"
+  >
+    {{ validatorMaxvalueKey | translate }} {{ max }}.
+  </small>
+  <small
+    *ngIf="
+      (inputControl.errors?.pattern || inputControl.errors?.numberFormat) &&
+      (submitted || inputField.touched)
+    "
+    class="text-danger"
+  >
+    {{ 'validator.format' | translate }}.
+  </small>
+  <small
+    *ngIf="inputControl?.errors?.minlength && (submitted || inputField.touched)"
+    class="text-danger"
+  >
+    {{ 'validator.minlength' | translate : { minlength: minlength } }}.
+  </small>
+</div>
+
+<!-- Input textarea avec "required" -->
+<div *ngIf="required && textarea && !readonly">
+  <textarea
+    class="form-control"
+    [ngClass]="inputClass"
+    [class.border-danger]="
+      !inputControl.valid &&
+      !disabled &&
+      (inputField.errors === null || messageRequired) &&
+      (inputField?.touched || submitted)
+    "
+    [rows]="rows"
+    required
+    (blur)="onBlur()"
+    [readonly]="
+      disabled ||
+      (security &&
+        !user.currentUser?.isAuthWrite(inputControl.name?.toString()))
+    "
+    #inputField="ngModel"
+    [(ngModel)]="value"
+    [maxlength]="maxlength"
+    [placeholder]="
+      placeholderKey === undefined ? '' : translate.instant(placeholderKey)
+    "
+  >
+  </textarea>
+  <small
+    *ngIf="
+      inputControl?.errors?.minlength &&
+      (submitted || inputField.touched) &&
+      !disabled &&
+      (!security ||
+        user.currentUser?.isAuthWrite(inputControl.name?.toString()))
+    "
+    class="text-danger"
+  >
+    {{ 'validator.minlength' | translate : { minlength: minlength } }}.
+  </small>
+  <small
+    *ngIf="
+      inputField.errors?.required &&
+      (inputField?.touched || submitted) &&
+      messageRequired &&
+      !disabled &&
+      (!security ||
+        user.currentUser?.isAuthWrite(inputControl.name?.toString()))
+    "
+    class="text-danger"
+  >
+    {{ 'validator.required' | translate }}.
+  </small>
+</div>
+
+<!-- Input textarea sans "required" -->
+<div *ngIf="!required && textarea && !readonly">
+  <textarea
+    class="form-control"
+    [ngClass]="inputClass"
+    [class.border-danger]="
+      !inputControl.valid && !disabled && (inputField.touched || submitted)
+    "
+    [rows]="rows"
+    #inputField="ngModel"
+    [readonly]="
+      disabled ||
+      (security &&
+        !user.currentUser?.isAuthWrite(inputControl.name?.toString()))
+    "
+    [(ngModel)]="value"
+    (blur)="onBlur()"
+    [maxlength]="maxlength"
+    [placeholder]="
+      placeholderKey === undefined ? '' : translate.instant(placeholderKey)
+    "
+  ></textarea>
+  <small
+    *ngIf="inputControl?.errors?.minlength && (submitted || inputField.touched)"
+    class="text-danger"
+  >
+    {{ 'validator.minlength' | translate : { minlength: minlength } }}.
+  </small>
+</div>
+
+<!------------------------------------>
+<!-------    Mode readonly     ------->
+<!------------------------------------>
+<ng-container *ngIf="readonly">
+  <ng-container
+    *ngIf="textarea; then readonlyTextarea; else readonlyOthers"
+  ></ng-container>
+</ng-container>
+
+<!-- Textarea read only text to support carriage returns -->
+<ng-template #readonlyTextarea>
+  <div
+    class="is-input-readonly"
+    [ngClass]="inputClass"
+    [class.is-input-empty]="value === undefined || value === null"
+  >
+    <textarea
+      class="form-control form-control-plaintext is-textarea-readonly"
+      [ngClass]="inputClass"
+      [rows]="rows"
+      [readonly]="true"
+      [(ngModel)]="value"
+      [placeholder]="
+        placeholderKey === undefined ? '' : translate.instant(placeholderKey)
+      "
+    >
+    </textarea>
+  </div>
+</ng-template>
+
+<!-- Generic read only text -->
+<ng-template #readonlyOthers>
+  <div
+    class="is-input-readonly"
+    [ngClass]="inputClass"
+    [class.is-input-empty]="value === undefined || value === null"
+  >
+    <span *ngIf="format === undefined">
+      {{ value }}
+      <span *ngIf="value !== undefined" [class]="unitClass">{{ unit }}</span>
+    </span>
+    <span *ngIf="format === 'number'" [class]="unitClass">
+      {{ value | isnumber }} <span *ngIf="value !== undefined">{{ unit }}</span>
+    </span>
+    <span *ngIf="format === 'decimal'">
+      {{ value | decimal : decimals }}
+      <span *ngIf="value !== undefined">{{ unit }}</span>
+    </span>
+  </div>
+</ng-template>
+
+<!------------------------------------>
+<!-------    Mode disabled     ------->
+<!------------------------------------>
+<!-- Input disabled avec formattage -->
+<div
+  [class]="'form-control is-disabled ' + inputClass"
+  *ngIf="
+    format &&
+    value &&
+    !textarea &&
+    !readonly &&
+    (disabled ||
+      (security &&
+        !user.currentUser?.isAuthWrite(inputControl.name?.toString())))
+  "
+>
+  <span *ngIf="format === 'number'">{{ value | isnumber }}</span>
+  <span *ngIf="format === 'decimal'">{{ value | decimal : decimals }}</span>
+</div>
+
+<!-- Input disabled sans formattage -->
+<input
+  *ngIf="
+    (!format || !value) &&
+    !textarea &&
+    !readonly &&
+    (disabled ||
+      (security &&
+        !user.currentUser?.isAuthWrite(inputControl.name?.toString())))
+  "
+  type="text"
+  [class]="'form-control is-disabled ' + inputClass"
+  [ngClass]="inputClass"
+  [(ngModel)]="value"
+  [placeholder]="
+    placeholderKey === undefined ? '' : translate.instant(placeholderKey)
+  "
+  [readonly]="true"
+/>

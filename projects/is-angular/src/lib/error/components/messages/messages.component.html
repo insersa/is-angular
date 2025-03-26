@@ -1,0 +1,16 @@
+<div *ngIf="messageService.messages.length > 0">
+  <div
+    *ngFor="let message of messageService.messages"
+    class="alert"
+    role="alert"
+    [ngClass]="{
+      'alert-danger': message.severity === 'error',
+      'alert-success': message.severity === 'success',
+      'alert-warning': message.severity === 'warn',
+      'alert-info': message.severity === 'info'
+    }"
+  >
+    <span class="font-weight-bold">{{ message.summary | translate }}</span>
+    <span>: {{ message.detail | translate }}</span>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<div class="container content"> <!-- container centers content on large screens -->
+  <div style="text-align:center">
+    <h1>
+      DEMO {{ title }}
+    </h1>
+  </div>
+
+
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/input']">Inputs</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/data']"> Data table</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/codetest']">Codes</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/querytest']">Query Builder</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/divers']">Divers</a>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link mr-2" (click)="translate.use('fr')">FR</button>|
+      <button class="btn btn-link mr-2" (click)="translate.use('de')">DE</button>|
+      <button class="btn btn-link" (click)="translate.use('en')">EN</button>
+    </li>
+  </ul>
+
+  <router-outlet></router-outlet>
+</div>
+

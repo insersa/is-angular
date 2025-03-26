@@ -1,0 +1,25 @@
+<span *ngIf="shortText || longText">
+  <!-- Help icon -->
+  <i
+    class="fa fa-info-circle"
+    [popover]="popTemplate"
+    #pop="bs-popover"
+    placement="bottom"
+    [outsideClick]="true"
+    container="body"
+    containerClass="is-help-tooltip"
+  ></i>
+
+  <!-- Help popover -->
+  <ng-template #popTemplate>
+    <div>
+      <div class="text-right">
+        <i class="fa fa-times" (click)="pop.hide()"></i>
+      </div>
+      <div class="pb-2">
+        <strong>{{ shortText }}</strong>
+      </div>
+      <div [innerHTML]="longText"></div>
+    </div>
+  </ng-template>
+</span>

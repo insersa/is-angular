@@ -1,0 +1,7 @@
+<h1>Datatable is-table</h1>
+
+<is-table [value]="list" sortField="canton" [emptyMessage]="''" [sortable]="true">
+  <is-column field="id" header="N°" (sortFunction)="onSort($event)" sortable="custom"> </is-column>
+  <is-column field="name" header="Nom du canton"> </is-column>
+  <is-column field="description" header="Description"> </is-column>
+</is-table>

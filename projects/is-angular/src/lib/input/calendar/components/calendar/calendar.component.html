@@ -1,0 +1,98 @@
+<!------------------------------------>
+<!---------- Mode Edition ------------>
+<!------------------------------------>
+
+<div *ngIf="required && (!readonly || disabled)">
+  <p-calendar
+    styleClass="is-calendar"
+    [inputStyleClass]="
+      !inputControl?.valid && !disabled && (messageRequired || inputField.errors === undefined) && (inputField.touched || submitted)
+        ? 'form-control border-danger'
+        : 'form-control'
+    "
+    dateFormat="dd.mm.yy"
+    #inputField="ngModel"
+    [(ngModel)]="value"
+    (blur)="onBlur()"
+    [locale]="locale"
+    required
+    [minDate]="min"
+    [maxDate]="max"
+    [defaultDate]="defaultDate"
+    [stepMinute]="stepMinute"
+    [showTime]="showTime"
+    [hourFormat]="hourFormat"
+    [appendTo]="appendTo"
+    [autoZIndex]="autoZIndex"
+    [baseZIndex]="baseZIndex"
+    [disabled]="disabled || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString()))"
+  ></p-calendar>
+  <small *ngIf="inputControl.errors?.required && messageRequired && (inputField?.touched || submitted)" class="text-danger">
+    {{ 'validator.required' | translate }}.
+  </small>
+  <small *ngIf="!readonly && inputControl?.errors?.minDate && (inputField?.touched || submitted)" class="text-danger">
+    {{ 'validator.mindate' | translate }}
+    {{ min | date : 'dd.MM.yyyy' }}.
+  </small>
+  <small *ngIf="!readonly && inputControl?.errors?.maxDate && (inputField?.touched || submitted)" class="text-danger">
+    {{ 'validator.maxdate' | translate }}
+    {{ max | date : 'dd.MM.yyyy' }}.
+  </small>
+</div>
+
+<!----------- Not required ----------------------->
+<div
+  *ngIf="!required && (!readonly || disabled)"
+  [class.has-danger]="!inputControl?.valid && (inputField.touched || submitted) && !disabled"
+>
+  <p-calendar
+    styleClass="is-calendar"
+    [inputStyleClass]="
+      !inputControl?.valid && !disabled && (inputField.touched || submitted) ? 'form-control border-danger' : 'form-control'
+    "
+    dateFormat="dd.mm.yy"
+    #inputField="ngModel"
+    [(ngModel)]="value"
+    (blur)="onBlur()"
+    [locale]="locale"
+    [minDate]="min"
+    [maxDate]="max"
+    [defaultDate]="defaultDate"
+    [stepMinute]="stepMinute"
+    [showTime]="showTime"
+    [hourFormat]="hourFormat"
+    [appendTo]="appendTo"
+    [disabled]="disabled || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString()))"
+  ></p-calendar>
+  <small *ngIf="!readonly && inputControl?.errors?.minDate && (inputField?.touched || submitted)" class="text-danger">
+    {{ 'validator.mindate' | translate }} {{ minDate | date : 'dd.MM.yyyy' }}.
+  </small>
+  <small *ngIf="!readonly && inputControl?.errors?.maxDate && (inputField?.touched || submitted)" class="text-danger">
+    {{ 'validator.maxdate' | translate }} {{ maxDate | date : 'dd.MM.yyyy' }}.
+  </small>
+</div>
+
+<!------------------------------------>
+<!------- Mode Consultation ---------->
+<!------------------------------------>
+<div
+  *ngIf="readonly && !showTime"
+  class="is-input-readonly"
+  [ngClass]="inputClass"
+  [class.is-input-empty]="value === undefined || value === null"
+>
+  <span>
+    {{ value | isdate : 'dd.MM.yyyy' }}
+  </span>
+</div>
+<!------- Avec heure ---------->
+<div
+  *ngIf="readonly && showTime"
+  class="is-input-readonly"
+  [ngClass]="inputClass"
+  [class.is-input-empty]="value === undefined || value === null"
+>
+  <span>
+    {{ value | isdate : 'dd.MM.yyyy HH:mm' }}
+  </span>
+</div>

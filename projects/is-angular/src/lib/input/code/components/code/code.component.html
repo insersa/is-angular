@@ -1,0 +1,156 @@
+<!------------------------------------>
+<!-------- MODE EDITION -------------->
+<!------------------------------------>
+
+<!-- 1. select avec "required" -->
+<div *ngIf="required && !radio && !readonly && !autocomplete">
+  <select
+    class="form-control"
+    [ngClass]="inputClass"
+    [class.border-danger]="!codeModel.valid && (codeModel.dirty || submitted) && !readonly"
+    [(ngModel)]="value"
+    #codeModel="ngModel"
+    [disabled]="disabled || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString()))"
+    required
+  >
+    <option></option>
+    <option *ngFor="let code of codes" [value]="code">
+      {{ 'iscode.' + fieldname + '.' + code | translate }}
+    </option>
+  </select>
+  <small *ngIf="!codeModel.valid && (codeModel.dirty || submitted) && !readonly && !disabled && messageRequired" class="text-danger">
+    {{ 'validator.required' | translate }}.
+  </small>
+</div>
+
+<!-- 2. select sans "required" -->
+<div *ngIf="!required && !radio && !readonly && !autocomplete">
+  <select
+    class="form-control"
+    [ngClass]="inputClass"
+    [(ngModel)]="value"
+    #codeModel="ngModel"
+    [disabled]="disabled || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString()))"
+  >
+    <option></option>
+    <option *ngFor="let code of codes" [value]="code">
+      {{ 'iscode.' + fieldname + '.' + code | translate }}
+    </option>
+  </select>
+</div>
+
+<!-- 3. Comme boutons radio alignés horizontalement -->
+<div *ngIf="!required && radio && !readonly && !radioDiv" [ngClass]="inputClass">
+  <p-radioButton
+    *ngFor="let code of codes"
+    [(ngModel)]="value"
+    [disabled]="disabled || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString()))"
+    [value]="code"
+    [label]="translate.instant('iscode.' + fieldname + '.' + code)"
+    class="is-radiobutton"
+  >
+  </p-radioButton>
+</div>
+<div *ngIf="required && radio && (!readonly || disabled) && !radioDiv" [ngClass]="inputClass">
+  <div>
+    <p-radioButton
+      *ngFor="let code of codes"
+      [(ngModel)]="value"
+      [disabled]="disabled || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString()))"
+      [value]="code"
+      [label]="translate.instant('iscode.' + fieldname + '.' + code)"
+      class="is-radiobutton"
+      required
+    >
+    </p-radioButton>
+  </div>
+  <small
+    *ngIf="!inputControl.valid && (inputControl.touched || submitted) && !readonly && !disabled && messageRequired"
+    class="text-danger"
+  >
+    {{ 'validator.required' | translate }}.
+  </small>
+</div>
+
+<!-- 4. Comme boutons radio alignés verticalement -->
+<div *ngIf="!required && radio && !readonly && radioDiv" [ngClass]="inputClass">
+  <div *ngFor="let code of codes">
+    <p-radioButton
+      [(ngModel)]="value"
+      [disabled]="disabled || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString()))"
+      [value]="code"
+      [label]="translate.instant('iscodelong.' + fieldname + '.' + code)"
+    >
+    </p-radioButton>
+  </div>
+</div>
+<div *ngIf="required && radio && !readonly && radioDiv" [ngClass]="inputClass">
+  <div *ngFor="let code of codes">
+    <p-radioButton
+      [(ngModel)]="value"
+      [disabled]="disabled || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString()))"
+      [value]="code"
+      [label]="translate.instant('iscodelong.' + fieldname + '.' + code)"
+      required
+    >
+    </p-radioButton>
+  </div>
+</div>
+
+<!-- 5. Comme autocomplete -->
+<!-- Test if the bug persists, if not use standard (onFocus)="autocomplete.show()"-->
+<!-- https://stackoverflow.com/questions/49153473/show-suggestion-on-focus-using-primeng-autocomplete-component -->
+<div *ngIf="!radio && !readonly && autocomplete">
+  <p-autoComplete
+    [(ngModel)]="objectValue"
+    #autocomplete
+    [suggestions]="codeSuggestions"
+    (completeMethod)="onSuggest($event)"
+    #autocompleteModel="ngModel"
+    [required]="required"
+    field="name"
+    (onFocus)="!autocomplete.value && autocomplete.handleDropdownClick($event)"
+    (onBlur)="onBlur($event)"
+    [minLength]="0"
+    [placeholder]="'code.placeholder.autocomplete' | translate"
+    [emptyMessage]="emptyMessageKey | translate"
+    [showClear]="showClearBtn"
+    (onClear)="clearSuggestion()"
+    [inputStyleClass]="
+      !autocompleteModel.valid && !readonly && !disabled && (submitted || (messageRequired && autocompleteModel.touched))
+        ? 'border-danger form-control' + inputClass
+        : 'form-control ' + inputClass
+    "
+  >
+    <ng-template let-code pTemplate="item">
+      <div class="ui-helper-clearfix">
+        <div>
+          {{ 'iscode.' + fieldname + '.' + code.code | translate }}
+          {{ code.code }}
+        </div>
+      </div>
+    </ng-template>
+  </p-autoComplete>
+  <small
+    *ngIf="!autocompleteModel.valid && (autocompleteModel.dirty || submitted) && !readonly && !disabled && messageRequired"
+    class="text-danger"
+  >
+    {{ 'validator.required' | translate }}.
+  </small>
+</div>
+
+<!------------------------------------>
+<!-------- MODE Consultation --------->
+<!------------------------------------>
+<div *ngIf="readonly" class="is-input-readonly" [class.is-input-empty]="value === undefined || value === null" [ngClass]="inputClass">
+  <span *ngIf="!short && value !== undefined && value !== null">
+    {{ 'iscodelong.' + fieldname + '.' + value | translate }}
+  </span>
+  <span *ngIf="short && value !== undefined && value !== null">
+    {{ 'iscode.' + fieldname + '.' + value | translate }}
+  </span>
+  <!-- On affiche le code numérique sauf pour radio, p.ex. oui/non  1, 2 -->
+  <span *ngIf="!short && !radio && showValue" class="is-codevalue">
+    {{ value }}
+  </span>
+</div>

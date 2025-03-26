@@ -1,0 +1,127 @@
+<!------------------------------------>
+<!-------- MODE EDITION -------------->
+<!------------------------------------>
+
+<!--- Shortcut codes sur une ligne --->
+<div *ngIf="shortcutsInline && !readonly" [ngClass]="inputClass">
+  <p-checkbox
+    *ngFor="let shortcut of shortcutCodes"
+    class="pl-2 pr-2"
+    [inputId]="'shortcut' + shortcut.from"
+    [value]="-shortcut.from"
+    [disabled]="readonly || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString()))"
+    [label]="translate.instant(shortcut['labelKey'])"
+    name="multicode"
+    [(ngModel)]="shortcutValues"
+    (onChange)="
+      onSelectShortcut({
+        from: shortcut.from,
+        to: shortcut.to,
+        checked: shortcutValues.indexOf(-shortcut.from) >= 0
+      })
+    "
+  >
+  </p-checkbox>
+</div>
+
+<!--- Shortcut codes comme liste --->
+<div *ngIf="!shortcutsInline && (!readonly || disabled)" [ngClass]="inputClass">
+  <div *ngFor="let shortcut of shortcutCodes">
+    <p-checkbox
+      [inputId]="'shortcut' + shortcut.from"
+      [value]="-shortcut.from"
+      [label]="translate.instant(shortcut['labelKey'])"
+      [disabled]="
+        disabled || readonly || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString())) || shortcut.disabled === true
+      "
+      name="multicode"
+      [(ngModel)]="shortcutValues"
+      (onChange)="
+        onSelectShortcut({
+          from: shortcut.from,
+          to: shortcut.to,
+          checked: shortcutValues.indexOf(-shortcut.from) >= 0
+        })
+      "
+    >
+    </p-checkbox>
+  </div>
+</div>
+
+<!--- NGX-BOOTSTRAP POPOVER ---->
+<div class="row" *ngIf="showPopup && !readonly" [ngClass]="inputClass">
+  <span *ngIf="shortcutCodes.length > 0" class="col-2"> {{ 'all.or' | translate }}: </span>
+  <div [class.col-12]="shortcutCodes.length === 0" [class.col-10]="shortcutCodes.length > 0">
+    <button
+      class="btn btn-light is-multicode-button"
+      type="button"
+      [popover]="popTemplate"
+      #pop="bs-popover"
+      container="body"
+      containerClass="is-multicode-popover"
+      placement="bottom"
+    >
+      <i class="fa fa-caret-down is-multicode-button-icon"></i>
+      <span *ngIf="selectedValues.length > 1"> {{ selectedValues.length }} {{ 'multicode.title.nbr' | translate }} </span>
+      <span *ngIf="selectedValues.length === 1">
+        {{ 'iscode.' + fieldname + '.' + selectedValues[0] | translate }}
+      </span>
+    </button>
+
+    <ng-template #popTemplate>
+      <button class="btn btn-secondary mr-1" type="button" (click)="onSelectAll(true)">
+        {{ 'button.all' | translate }}
+      </button>
+      <button class="btn btn-secondary" type="button" (click)="onSelectAll(false)">
+        {{ 'button.none' | translate }}
+      </button>
+      <div class="is-multicode-list">
+        <div class="row" *ngFor="let code of codes">
+          <div [class.col-8]="showValue" [class.col-12]="!showValue">
+            <p-checkbox
+              [value]="code"
+              [label]="translate.instant('iscode.' + fieldname + '.' + code)"
+              name="multicode"
+              [disabled]="readonly || (security && !user.currentUser?.isAuthWrite(fieldname))"
+              [(ngModel)]="selectedValues"
+              (ngModelChange)="onSelect()"
+            >
+            </p-checkbox>
+          </div>
+          <div class="col-3 text-right is-multicode-value" *ngIf="showValue">
+            {{ code }}
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary" (click)="pop.hide()">
+        {{ 'button.close' | translate }}
+      </button>
+    </ng-template>
+  </div>
+</div>
+
+<!-- <p-multiSelect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name"></p-multiSelect> -->
+
+<!------------------------------------>
+<!-------- MODE CONSULTATION --------->
+<!------------------------------------>
+
+<!--- Shortcut codes comme liste --->
+<div
+  *ngIf="readonly"
+  class="is-input-readonly"
+  [class.is-input-empty]="selectedValues.length === 0 && shortcutValues.length === 0"
+  [ngClass]="inputClass"
+>
+  <div *ngFor="let shortcut of shortcutCodes">
+    <span *ngIf="shortcutValues.indexOf(-shortcut.from) >= 0">
+      {{ shortcut['labelKey'] | translate }}
+    </span>
+  </div>
+  <div *ngIf="shortcutCodes.length === 0">
+    <div *ngFor="let value of selectedValues">
+      {{ 'iscode.' + fieldname + '.' + value | translate }}
+    </div>
+  </div>
+</div>

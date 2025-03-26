@@ -1,0 +1,69 @@
+<h1>Codes</h1>
+
+<div class="row form-group mt-5">
+  <div class="col-3 font-weight-bold">Code standard</div>
+  <div class="col-2">{{ 'codetest.field.color' | translate }}</div>
+  <div class="col-5">
+    <is-code fieldname="color" [(ngModel)]="record['color']" name="color" [security]="false"> </is-code>
+  </div>
+</div>
+
+<div class="row form-group mt-5">
+  <div class="col-3 font-weight-bold">Code keep</div>
+  <div class="col-2">{{ 'codetest.field.color' | translate }}</div>
+  <div class="col-5">
+    <is-code fieldname="color" [(ngModel)]="record['color']" name="color" [security]="false" [keep]="keepColor"> </is-code>
+  </div>
+</div>
+
+<div class="row form-group mt-5">
+  <div class="col-3 font-weight-bold">Code skip</div>
+  <div class="col-2">{{ 'codetest.field.color' | translate }}</div>
+  <div class="col-5">
+    <is-code fieldname="color" [(ngModel)]="record['color']" name="color" [security]="false" [skip]="keepColor"> </is-code>
+  </div>
+</div>
+
+<div class="row form-group">
+  <div class="col-3 font-weight-bold">Multi-code</div>
+  <div class="col-2">{{ 'codetest.field.color' | translate }}</div>
+  <div class="col-5">
+    <is-multicode fieldname="color" [(ngModel)]="record['multi-color']" name="multi-color" [security]="false"> </is-multicode>
+  </div>
+</div>
+
+<div class="row form-group">
+  <div class="col-3 font-weight-bold">Multi-code with shortcuts</div>
+  <div class="col-2">{{ 'codetest.field.color' | translate }}</div>
+  <div class="col-5">
+    <is-multicode
+      fieldname="color"
+      [(ngModel)]="record['shortcut-color']"
+      name="shortcut-color"
+      [security]="false"
+      [shortcutCodes]="[
+        { from: 3, to: 3, labelKey: 'color.yellow' },
+        { from: 1, to: 2, labelKey: 'color.cold' },
+        { from: 4, to: 5, labelKey: 'color.warm' }
+      ]"
+    >
+    </is-multicode>
+  </div>
+</div>
+
+<div class="row form-group">
+  <div class="col-3 font-weight-bold">Text code</div>
+  <div class="col-2">{{ 'codetest.field.color' | translate }}</div>
+  <div class="col-5">
+    <is-textcode fieldname="color" [(ngModel)]="record['text-color']" name="text-color"> </is-textcode>
+  </div>
+</div>
+
+<div class="row form-group">
+  <div class="col-3 font-weight-bold">Checkbox code</div>
+  <div class="col-2">{{ 'codetest.field.cold' | translate }}</div>
+  <div class="col-3">
+    <is-checkbox fieldname="color" [(ngModel)]="record['cold']" name="cold"> </is-checkbox>
+  </div>
+  <div class="col-2" *ngIf="record['cold']">Code value: {{ record['cold'] }}</div>
+</div>

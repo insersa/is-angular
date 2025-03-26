@@ -1,0 +1,30 @@
+<div class="row" [ngClass]="containerClass">
+  <div class="col">
+    <button
+      type="button"
+      class="btn btn-link is-custom-link"
+      (click)="onReturn()"
+      *ngIf="showReturn"
+    >
+      < {{ returnButtonKey | translate }}
+    </button>
+  </div>
+  <div class="col-6 text-right">
+    <button
+      type="button"
+      class="btn btn-link is-custom-link mr-2"
+      (click)="onPrevious()"
+      *ngIf="showPrevious"
+    >
+      {{ previousButtonKey | translate }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-link is-custom-link"
+      (click)="onNext()"
+      *ngIf="showNext"
+    >
+      {{ nextButtonKey | translate }}
+    </button>
+  </div>
+</div>

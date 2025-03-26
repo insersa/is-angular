@@ -1,0 +1,25 @@
+<div>
+  <is-objects-search
+    (searched)="isSearch = true"
+    (data)="onData($event)"
+    (moredata)="onMoreData($event)"
+    #search
+    (datacount)="count = $event"
+    (loading)="onLoading($event)"
+  >
+  </is-objects-search>
+</div>
+
+<div>
+  <is-objects-list
+    [list]="list"
+    [count]="count"
+    [loading]="loading"
+    [initSort]="search.sort"
+    (sort)="onSort($event)"
+    (export)="onExport()"
+    (loadMore)="onLoadMore()"
+    (selectItem)="onSelectRecord($event)"
+  >
+  </is-objects-list>
+</div>

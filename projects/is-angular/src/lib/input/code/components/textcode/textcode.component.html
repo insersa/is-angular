@@ -1,0 +1,52 @@
+<!------------------------------------>
+<!-------- MODE EDITION -------------->
+<!------------------------------------>
+
+<!-- 1. autocomplete avec "required" -->
+<div *ngIf="required && !readonly" class="ui-fluid">
+  <p-autoComplete
+    [inputStyleClass]="
+      !codeModel?.valid && (codeModel.dirty || submitted) && !readonly
+        ? 'form-control border-danger ' + inputClass
+        : 'form-control ' + inputClass
+    "
+    [(ngModel)]="value"
+    [suggestions]="suggestions"
+    (completeMethod)="search($event.query)"
+    #codeModel="ngModel"
+    [maxlength]="maxlength"
+    [disabled]="readonly"
+    required
+  >
+  </p-autoComplete>
+</div>
+
+<!-- 2. autocomplete sans "required" -->
+<div *ngIf="!required && !readonly" class="ui-fluid">
+  <p-autoComplete
+    [inputStyleClass]="
+      !codeModel?.valid && (codeModel.dirty || submitted) && !readonly
+        ? 'form-control border-danger ' + inputClass
+        : 'form-control ' + inputClass
+    "
+    [(ngModel)]="value"
+    [suggestions]="suggestions"
+    (completeMethod)="search($event.query)"
+    #codeModel="ngModel"
+    [maxlength]="maxlength"
+    [disabled]="readonly"
+  >
+  </p-autoComplete>
+</div>
+
+<!------------------------------------>
+<!-------- MODE Consultation --------->
+<!------------------------------------>
+<div
+  *ngIf="readonly"
+  class="is-input-readonly"
+  [ngClass]="inputClass"
+  [class.is-input-empty]="value === undefined || value === null"
+>
+  <span>{{ value }}</span>
+</div>

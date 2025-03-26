@@ -1,0 +1,34 @@
+<h1>Divers</h1>
+
+<h2>Components/librairies extérieurs</h2>
+
+<p class="mb-3">Permet le contrôle des différents composants extérieurs à angular (utile lors de mise à jour de version Angular).</p>
+
+<div class="row mb-5">             <!-- responsive row has 12 columns by default -->
+  <div class="col-md-6">      <!-- uses 6 columns on medium and larger screens... -->
+    Icon (test Fontawesome): <i class="fab fa-500px"></i>
+  </div>
+  <div class="col-md-6">      <!-- uses 12 columns on smaller than medium screens -->
+    Button (test Bootstrap): <button type="button" class="btn btn-primary">Primary</button>
+  </div>
+  <div class="col-md-6">
+    Calendar (test primeNG): <p-calendar [(ngModel)]="date"></p-calendar>
+  </div>
+  <div class="col-md-6">
+    Traduction (test ngxtranslate) : {{ 'HELLO' | translate:{value: 'world'} }}
+  </div>
+</div>
+
+
+<h2>Components is-angular</h2>
+
+<div class="row">
+  <div class="col-md-6">
+    <span class="mr-1">Component is-alert (Affichage d'une popup):</span>
+    <button type="button" class="btn btn-primary" (click)="showAlert = !showAlert;">Activer/Desactiver</button>
+    <span *ngIf="showAlert">
+      <is-alert [smallIcon]="false" [smallTitle]="true" ></is-alert>
+    </span>
+
+  </div>
+</div>

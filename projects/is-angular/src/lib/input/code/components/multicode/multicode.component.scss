@@ -1,0 +1,39 @@
+@import "../../../../../../../../src/styles";
+.is-multicode-button {
+  width:100%;
+
+  i {
+    float: right;
+    display: inline-block;
+  }
+
+  span {
+    float:left;
+    white-space: normal;
+  }
+}
+
+.is-multicode-button-icon {
+  line-height:20px;
+}
+
+.is-multicode-list {
+  width:400px;
+  max-height:250px;
+  margin-top:5px;
+  margin-bottom:10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.is-multicode-value {
+  color:grey;
+  margin-right:5px;
+}
+
+.is-multicode-popover {
+  max-width:800px;
+  background-color: #f2f2f2;
+  padding: 0.5rem 0.75rem;
+}
+

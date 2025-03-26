@@ -1,0 +1,12 @@
+.is-scroll-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  opacity: 0;
+  transition: all .2s ease-in-out;
+}
+
+.is-show-scroll {
+  opacity: 1;
+  transition: all .2s ease-in-out;
+}

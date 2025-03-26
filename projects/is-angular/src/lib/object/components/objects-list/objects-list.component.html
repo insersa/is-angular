@@ -1,0 +1,35 @@
+<!-- Example list for test, overriden in the business object implementation -->
+<is-table
+  [value]="list"
+  sortField="{{ sortField }}"
+  [sortOrder]="sortOrder"
+  [emptyMessage]="''"
+  [sortable]="true"
+>
+  <is-column
+    field="aaa_lastname"
+    header="Name"
+    sortable="custom"
+    (sortFunction)="onSort($event)"
+  >
+    <ng-template let-item="rowData" isTemplate="body">
+      <span>{{ item['aaa_firstname'] }} {{ item['aaa_lastname'] }}</span>
+    </ng-template>
+  </is-column>
+  <is-column
+    field="aaa_streetname"
+    header="Address"
+    sortable="custom"
+    (sortFunction)="onSort($event)"
+  >
+    <ng-template let-item="rowData" isTemplate="body">
+      <span>{{ item['aaa_streetname'] }} {{ item['aaa_streetnumber'] }}</span>
+    </ng-template>
+  </is-column>
+  <!-- Custom second row for each record -->
+  <is-row>
+    <ng-template isTemplate="body" let-item="rowData">
+      <span>{{ item['aaa_hobbies'] }}</span>
+    </ng-template>
+  </is-row>
+</is-table>

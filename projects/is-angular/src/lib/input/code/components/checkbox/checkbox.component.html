@@ -1,0 +1,10 @@
+<div>
+  <p-checkbox
+    [(ngModel)]="value"
+    [binary]="true"
+    [disabled]="disabled"
+    ngDefaultControl
+  >
+  </p-checkbox>
+  <span *ngIf="labelKey !== undefined">{{ labelKey | translate }}</span>
+</div>

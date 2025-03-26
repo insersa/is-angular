@@ -1,0 +1,83 @@
+<div *ngIf="required && !readonly" class="ui-fluid">
+  <p-autoComplete
+    [(ngModel)]="item"
+    [suggestions]="list"
+    (completeMethod)="search($event)"
+    field="combinedLabel"
+    ngDefaultControl
+    styleClass="is-autocomplete"
+    [inputStyleClass]="
+      !autocompleteModel.valid && !readonly && !disabled && (submitted || (messageRequired && autocompleteModel.touched))
+        ? 'border-danger form-control is-autocomplete-input ' + inputClass
+        : 'form-control is-autocomplete-input ' + inputClass
+    "
+    [minLength]="minLength"
+    required
+    [readonly]="disabled || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString()))"
+    [placeholder]="placeholderKey === undefined || disabled ? '' : translate.instant(placeholderKey)"
+    (onSelect)="onSelect($event)"
+    (onBlur)="onBlur($event)"
+    [showClear]="true"
+    (onClear)="onClear()"
+    [emptyMessage]="emptyMessageKey | translate"
+    #autocompleteModel="ngModel"
+    #autocomplete
+  >
+    <ng-template let-selectitem pTemplate="item">
+      <div class="ui-helper-clearfix" style="border-bottom: 1px solid #d5d5d5">
+        <div class="d-inline-flex p-2" *ngIf="numberField !== undefined">
+          {{ selectitem.number }}
+        </div>
+        <div class="d-inline-flex p-2" *ngIf="middleField !== undefined">
+          {{ selectitem.middleText }}
+        </div>
+        <div class="d-inline-flex p-2">{{ selectitem.text }}</div>
+      </div>
+    </ng-template>
+  </p-autoComplete>
+  <small
+    *ngIf="autocompleteModel.errors?.required && (autocompleteModel?.touched || submitted) && !readonly && messageRequired"
+    class="text-danger"
+  >
+    {{ 'validator.required' | translate }}.
+  </small>
+</div>
+
+<div *ngIf="!required && !readonly" class="ui-fluid">
+  <p-autoComplete
+    [(ngModel)]="item"
+    [suggestions]="list"
+    (completeMethod)="search($event)"
+    field="combinedLabel"
+    ngDefaultControl
+    styleClass="is-autocomplete"
+    [inputStyleClass]="'form-control is-autocomplete-input ' + inputClass"
+    [minLength]="minLength"
+    [readonly]="disabled || (security && !user.currentUser?.isAuthWrite(inputControl.name?.toString()))"
+    [placeholder]="placeholderKey === undefined || disabled ? '' : translate.instant(placeholderKey)"
+    (onSelect)="onSelect($event)"
+    (onBlur)="onBlur($event)"
+    [showClear]="true"
+    (onClear)="onClear()"
+    [emptyMessage]="emptyMessageKey | translate"
+    #autocomplete
+  >
+    <ng-template let-selectitem pTemplate="item">
+      <div class="ui-helper-clearfix" style="border-bottom: 1px solid #d5d5d5">
+        <div class="d-inline-flex p-2" *ngIf="numberField !== undefined">
+          {{ selectitem.number }}
+        </div>
+        <div class="d-inline-flex p-2" *ngIf="middleField !== undefined">
+          {{ selectitem.middleText }}
+        </div>
+        <div class="d-inline-flex p-2">{{ selectitem.text }}</div>
+      </div>
+    </ng-template>
+  </p-autoComplete>
+</div>
+
+<!-------------- READONLY ---------------->
+<div *ngIf="readonly" class="is-input-readonly" [ngClass]="inputClass" [class.is-input-empty]="value === undefined || value === null">
+  <span *ngIf="!withLink">{{ item?.combinedLabel }}</span>
+  <a *ngIf="withLink" (click)="navigate.emit()">{{ item?.combinedLabel }}</a>
+</div>

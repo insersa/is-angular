@@ -1,0 +1,69 @@
+<div *ngIf="!readonly && required">
+  <textarea
+    pInputTextarea
+    class="form-control"
+    [ngClass]="inputClass"
+    [class.border-danger]="
+      !disabled && !inputControl.valid && (inputField?.touched || submitted)
+    "
+    [rows]="rows"
+    [autoResize]="autoResize"
+    required
+    (blur)="onBlur()"
+    [readonly]="disabled"
+    #inputField="ngModel"
+    [(ngModel)]="value"
+    [maxlength]="maxlength"
+  >
+  </textarea>
+  <small
+    *ngIf="
+      inputField.errors?.required &&
+      (inputField?.touched || submitted) &&
+      !disabled
+    "
+    class="text-danger"
+  >
+    {{ 'validator.required' | translate }}.
+  </small>
+</div>
+
+<!-- Input textarea sans "required" -->
+<div *ngIf="!required && !readonly">
+  <textarea
+    pInputTextarea
+    [autoResize]="autoResize"
+    class="form-control"
+    [ngClass]="inputClass"
+    [class.border-danger]="
+      !inputControl.valid && (inputField.touched || submitted)
+    "
+    [rows]="rows"
+    #inputField="ngModel"
+    [readonly]="disabled"
+    [(ngModel)]="value"
+    (blur)="onBlur()"
+    [maxlength]="maxlength"
+  ></textarea>
+</div>
+
+<!------------------------------------>
+<!-------    Mode readonly     ------->
+<!------------------------------------>
+<div
+  *ngIf="readonly"
+  class="is-input-readonly"
+  [ngClass]="inputClass"
+  [class.is-input-empty]="value === undefined || value === null"
+>
+  <textarea
+    pInputTextarea
+    class="form-control form-control-plaintext is-textarea-readonly"
+    [ngClass]="inputClass"
+    [autoResize]="autoResize"
+    [readonly]="true"
+    [rows]="rows"
+    [(ngModel)]="value"
+  >
+  </textarea>
+</div>

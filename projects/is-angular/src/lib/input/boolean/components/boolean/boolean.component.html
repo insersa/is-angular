@@ -1,0 +1,38 @@
+<div *ngIf="!readonly && required" [ngClass]="inputClass">
+  <p-radioButton
+    [value]="true"
+    [label]="'boolean.true' | translate"
+    class="is-radiobutton"
+    [(ngModel)]="value"
+    required
+  ></p-radioButton>
+  <p-radioButton
+    [value]="false"
+    [label]="'boolean.false' | translate"
+    [(ngModel)]="value"
+    required
+  ></p-radioButton>
+</div>
+<div *ngIf="!readonly && !required" [ngClass]="inputClass">
+  <p-radioButton
+    [value]="true"
+    [label]="'boolean.true' | translate"
+    class="is-radiobutton"
+    [(ngModel)]="value"
+  ></p-radioButton>
+  <p-radioButton
+    [value]="false"
+    [label]="'boolean.false' | translate"
+    [(ngModel)]="value"
+  ></p-radioButton>
+</div>
+
+<div
+  *ngIf="readonly"
+  class="is-input-readonly"
+  [ngClass]="inputClass"
+  [class.is-input-empty]="value === undefined || value === null"
+>
+  <span *ngIf="value === true">{{ 'boolean.true' | translate }}</span>
+  <span *ngIf="value === false">{{ 'boolean.false' | translate }}</span>
+</div>

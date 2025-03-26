@@ -1,0 +1,14 @@
+{
+  "iscode": {
+    "color": {"1": "blanc", "2": "bleu", "3": "jaune", "4": "vert", "5": "rouge"},
+    "material": {"1": "bois", "2": "métal", "3": "verre"}
+  },
+  "codetest": {"field": {"color": "Couleur", "material": "Matériel"}},
+  "color": {"cold": "Couleur froid", "warm": "Couleur chaud"},
+  "all": {"or": "ou"},
+  "multicode": {"title": {"nbr": "valeurs sélectionnées"}},
+  "button": {"all": "Tous", "none": "Aucun", "close": "Fermer"},
+  "HELLO": "Salut {{value}}",
+  "canton": {"placeholder": "Nom du canton"},
+  "validator": {"minlength": "Minimum {{minlength}} caractères"}
+}

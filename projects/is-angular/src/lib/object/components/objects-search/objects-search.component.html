@@ -1,0 +1,45 @@
+<!-- Example form for test, overriden in the business object implementation -->
+<form *ngIf="show" #form="ngForm" novalidate autocomplete="off">
+  <!-- Simple (elastic) search -->
+  <div *ngIf="!extendedSearch">
+    <input
+      class="form-control"
+      name="aaa_simplesearch"
+      [(ngModel)]="simpleQuery['aaa_simplesearch']"
+    />
+  </div>
+
+  <!-- Extended search -->
+  <div *ngIf="extendedSearch">
+    <input
+      id="firstNameInput"
+      class="form-control"
+      name="aaa_firstname"
+      [(ngModel)]="extendedQuery.aaa_firstname"
+    />
+    <input
+      class="form-control"
+      name="aaa_lastname"
+      [(ngModel)]="extendedQuery.aaa_lastname"
+    />
+  </div>
+
+  <!-- Button for toggling between simple and extended search -->
+  <button
+    id="toggleButton"
+    type="button"
+    class="btn btn-link rbl-link"
+    value="Toggle search form"
+    (click)="extendedSearch = !extendedSearch"
+  >
+    <i class="fa fa-chevron-down"></i>
+  </button>
+
+  <!-- Search button -->
+  <button
+    id="searchButton"
+    class="btn btn-primary"
+    (click)="onSearch()"
+    value="Search"
+  ></button>
+</form>
